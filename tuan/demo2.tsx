@@ -1,29 +1,22 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-class Header extends Component<object, { color: string }> {
-  constructor(props: object) {
-    super(props);
-    this.state = { color: "red" };
-    console.log("1️⃣constructor");
-  }
-  componentDidMount() {
-    console.log("3️⃣componentDidMount");
-    setTimeout(() => {
-      console.log("\n--- Gọi setState() ---");
-      this.setState({ color: "yellow" });
-    }, 1000);
-  }
-  componentDidUpdate() {
-    console.log("5️⃣componentDidUpdate - Màu mới: " + this.state.color);
-  }
-  render() {
-    console.log("2️⃣/4️⃣ render - color: " + this.state.color);
-    return (
-      <div>
-        <h1>Màu: {this.state.color}</h1>
-        <p>Mở Console (F12) để xem thứ tự lifecycle</p>
-      </div>
-    );
-  }
+
+// Demo: useEffect với [color] = chạy khi color thay đổi
+function Header() {
+  const [color, setColor] = useState("red");
+
+  useEffect(() => {
+    console.log("🟠 useEffect[color] - Màu thay đổi: " + color);
+  }, [color]); // Chạy khi color thay đổi
+
+  return (
+    <div>
+      <h1>Màu: {color}</h1>
+      <button onClick={() => setColor("yellow")}>Yellow</button>
+      <button onClick={() => setColor("blue")}>Blue</button>
+      <p>Mở Console (F12) để xem log</p>
+    </div>
+  );
 }
+
 ReactDOM.createRoot(document.getElementById('root')!).render(<Header />);
